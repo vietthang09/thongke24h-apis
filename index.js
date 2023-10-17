@@ -22,14 +22,14 @@ app.use(express.json());
 
 app.use("/api", thongke24h);
 
-cron.schedule("* * * * * *", () => {
-  updateKetQuaMienBac();
-  updateKetQuaMienNam();
-  updateKetQuaMienTrung();
-  // updateDacBietTuan();
-  // updateDacBietThang();
-  // updateDacBietNam();
-});
+// cron.schedule("* * * * * *", () => {
+//   updateKetQuaMienBac();
+//   updateKetQuaMienNam();
+//   updateKetQuaMienTrung();
+//   updateDacBietTuan();
+//   updateDacBietThang();
+//   updateDacBietNam();
+// });
 
 app.listen(6000, () => {
   console.log("listening on port 6000");
