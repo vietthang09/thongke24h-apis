@@ -17,53 +17,6 @@ const getKetQuaMienBac = async (req, res) => {
   });
 };
 
-const updateKetQuaMienBac = async (req, res) => {
-  const formatter = new Intl.DateTimeFormat("en-US", {
-    timeZone: "Asia/Ho_Chi_Minh",
-  });
-  const currentVietnamDate = formatter.format(new Date());
-  const currentDay = new Date(currentVietnamDate);
-  const currentDayString = `${currentDay.getFullYear()}-${currentDay.getMonth()}-${currentDay.getDate()}`;
-  // check in database
-  var selectStatement = `SELECT html FROM ketquamienbac WHERE ngay = "${currentDayString}"`;
-  db.query(selectStatement, (err, result) => {
-    if (err) {
-      return res.status(404).json({ error: err });
-    }
-    if (!result[0]) {
-      console.log("Da co!");
-    } else {
-      console.log("Dang cap nhat ket qua mien bac!");
-      loadKetQuaMienBac(
-        currentDayString,
-        currentDay.getFullYear(),
-        currentDay.getMonth(),
-        currentDay.getDate()
-      );
-    }
-  });
-};
-
-const loadKetQuaMienBac = async (currentDayString, year, month, day) => {
-  const response = await fetch(
-    `https://www.hdmediagroup.vn/ket-qua-xo-so-mien-bac-ngay-${currentDayString}.html`
-  );
-  const htmlString = await response.text();
-  const $ = cheerio.load(htmlString);
-  const contentHtml = $(
-    "form#XoSoNgayForm > div:first > table > tbody > tr:nth-child(2) > td:nth-child(2) > table"
-  ).html();
-  if (contentHtml) {
-    const content = contentHtml.replace(/"/g, "'");
-    var insertStatement = `INSERT INTO ketquamienbac (ngay, html) VALUES ('${year}-${month}-${day}', "${content}")`;
-    db.query(insertStatement, (err, result) => {
-      if (err) {
-        console.log(err);
-      }
-    });
-  }
-};
-
 const getKetQuaMienNam = async (req, res) => {
   const { ngay } = req.params;
 
@@ -80,53 +33,6 @@ const getKetQuaMienNam = async (req, res) => {
   });
 };
 
-const updateKetQuaMienNam = async (req, res) => {
-  const formatter = new Intl.DateTimeFormat("en-US", {
-    timeZone: "Asia/Ho_Chi_Minh",
-  });
-  const currentVietnamDate = formatter.format(new Date());
-  const currentDay = new Date(currentVietnamDate);
-  const currentDayString = `${currentDay.getFullYear()}-${currentDay.getMonth()}-${currentDay.getDate()}`;
-  // check in database
-  var selectStatement = `SELECT html FROM ketquamiennam WHERE ngay = "${currentDayString}"`;
-  db.query(selectStatement, (err, result) => {
-    if (err) {
-      return res.status(404).json({ error: err });
-    }
-    if (!result[0]) {
-      console.log("Da co!");
-    } else {
-      console.log("Dang cap nhat ket qua mien nam!");
-      loadKetQuaMienNam(
-        currentDayString,
-        currentDay.getFullYear(),
-        currentDay.getMonth(),
-        currentDay.getDate()
-      );
-    }
-  });
-};
-
-const loadKetQuaMienNam = async (currentDayString, year, month, day) => {
-  const response = await fetch(
-    `https://www.hdmediagroup.vn/xo-so-mien-nam-ngay-${currentDayString}.html`
-  );
-  const htmlString = await response.text();
-  const $ = cheerio.load(htmlString);
-  const contentHtml = $(
-    "form#SzXoSoMienNamForm > div:first > table > tbody > tr:nth-child(2) > td:nth-child(2) > table"
-  ).html();
-  if (contentHtml) {
-    const content = contentHtml.replace(/"/g, "'");
-    var insertStatement = `INSERT INTO ketquamiennam (ngay, html) VALUES ('${year}-${month}-${day}', "${content}")`;
-    db.query(insertStatement, (err, result) => {
-      if (err) {
-        console.log(err);
-      }
-    });
-  }
-};
-
 const getKetQuaMienTrung = async (req, res) => {
   const { ngay } = req.params;
 
@@ -141,53 +47,6 @@ const getKetQuaMienTrung = async (req, res) => {
       return res.status(200).json({ result: "" });
     }
   });
-};
-
-const updateKetQuaMienTrung = async (req, res) => {
-  const formatter = new Intl.DateTimeFormat("en-US", {
-    timeZone: "Asia/Ho_Chi_Minh",
-  });
-  const currentVietnamDate = formatter.format(new Date());
-  const currentDay = new Date(currentVietnamDate);
-  const currentDayString = `${currentDay.getFullYear()}-${currentDay.getMonth()}-${currentDay.getDate()}`;
-  // check in database
-  var selectStatement = `SELECT html FROM ketquamientrung WHERE ngay = "${currentDayString}"`;
-  db.query(selectStatement, (err, result) => {
-    if (err) {
-      return res.status(404).json({ error: err });
-    }
-    if (!result[0]) {
-      console.log("Da co!");
-    } else {
-      console.log("Dang cap nhat ket qua mien trung!");
-      loadKetQuaMienTrung(
-        currentDayString,
-        currentDay.getFullYear(),
-        currentDay.getMonth(),
-        currentDay.getDate()
-      );
-    }
-  });
-};
-
-const loadKetQuaMienTrung = async (currentDayString, year, month, day) => {
-  const response = await fetch(
-    `https://www.hdmediagroup.vn/xo-so-mien-trung-ngay-${currentDayString}.html`
-  );
-  const htmlString = await response.text();
-  const $ = cheerio.load(htmlString);
-  const contentHtml = $(
-    "form#SzXoSoMienTrungForm > div:first > table > tbody > tr:nth-child(2) > td:nth-child(2) > table"
-  ).html();
-  if (contentHtml) {
-    const content = contentHtml.replace(/"/g, "'");
-    var insertStatement = `INSERT INTO ketquamientrung (ngay, html) VALUES ('${year}-${month}-${day}', "${content}")`;
-    db.query(insertStatement, (err, result) => {
-      if (err) {
-        console.log(err);
-      }
-    });
-  }
 };
 
 const getKetQuaMienBac30Ngay = async (req, res) => {
@@ -264,6 +123,180 @@ const getDacBietTuan = async (req, res) => {
   });
 };
 
+const getDacBietThang = async (req, res) => {
+  var selectStatement = `SELECT html FROM dacbietthang`;
+  db.query(selectStatement, (err, result) => {
+    if (err) {
+      return res.status(404).json({ error: err });
+    }
+    if (result[0]) {
+      return res.status(200).json({ result: result[0].html });
+    } else {
+      return res.status(200).json({ result: "" });
+    }
+  });
+};
+
+const getDacBietNam = async (req, res) => {
+  const { nam } = req.params;
+
+  var selectStatement = `SELECT html FROM dacbietnam WHERE nam = "${nam}"`;
+  db.query(selectStatement, (err, result) => {
+    if (err) {
+      return res.status(404).json({ error: err });
+    }
+    if (result[0]) {
+      return res.status(200).json({ result: result[0].html });
+    } else {
+      return res.status(200).json({ result: "" });
+    }
+  });
+};
+
+const updateKetQuaMienBac = (req, res) => {
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Ho_Chi_Minh",
+  });
+  const currentVietnamDate = formatter.format(new Date());
+  const currentDay = new Date(currentVietnamDate);
+  // date string for url
+  const urlDateString = `${currentDay.getDate()}-${
+    currentDay.getMonth() + 1
+  }-${currentDay.getFullYear()}`;
+  // date string for sql statement
+  const sqlDateString = `${currentDay.getFullYear()}-${
+    currentDay.getMonth() + 1
+  }-${currentDay.getDate()}`;
+
+  // Check in database
+  var selectStatement = `SELECT html FROM ketquamienbac WHERE ngay = "${sqlDateString}"`;
+  db.query(selectStatement, async (err, result) => {
+    if (err) {
+      return res.status(404).json({ error: err });
+    }
+    if (!result[0]) {
+      console.log("Mien bac chua co");
+      const response = await fetch(
+        `https://www.hdmediagroup.vn/ket-qua-xo-so-mien-bac-ngay-${urlDateString}.html`
+      );
+      const htmlString = await response.text();
+      const $ = cheerio.load(htmlString);
+      const contentHtml = $(
+        "form#XoSoNgayForm > div:first > table > tbody > tr:nth-child(2) > td:nth-child(2) > table"
+      ).html();
+      const content = contentHtml.replace(/"/g, "'");
+      var insertStatement = `INSERT INTO ketquamienbac (ngay, html) VALUES ('${currentDay.getFullYear()}-${
+        currentDay.getMonth() + 1
+      }-${currentDay.getDate()}', "${content}")`;
+      if (contentHtml) {
+        db.query(insertStatement, (err, result) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+      }
+    } else {
+      console.log("Da cap nhat mien bac");
+    }
+  });
+};
+
+const updateKetQuaMienNam = (req, res) => {
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Ho_Chi_Minh",
+  });
+  const currentVietnamDate = formatter.format(new Date());
+  const currentDay = new Date(currentVietnamDate);
+  // date string for url
+  const urlDateString = `${currentDay.getDate()}-${
+    currentDay.getMonth() + 1
+  }-${currentDay.getFullYear()}`;
+  // date string for sql statement
+  const sqlDateString = `${currentDay.getFullYear()}-${
+    currentDay.getMonth() + 1
+  }-${currentDay.getDate()}`;
+
+  // check in database
+  var selectStatement = `SELECT html FROM ketquamiennam WHERE ngay = "${sqlDateString}"`;
+  db.query(selectStatement, async (err, result) => {
+    if (err) {
+      return res.status(404).json({ error: err });
+    }
+    if (!result[0]) {
+      console.log("Mien nam chua co");
+      const response = await fetch(
+        `https://www.hdmediagroup.vn/xo-so-mien-nam-ngay-${urlDateString}.html`
+      );
+      const htmlString = await response.text();
+      const $ = cheerio.load(htmlString);
+      const contentHtml = $(
+        "form#SzXoSoMienNamForm > div:first > table > tbody > tr:nth-child(2) > td:nth-child(2) > table"
+      ).html();
+      if (contentHtml) {
+        const content = contentHtml.replace(/"/g, "'");
+        var insertStatement = `INSERT INTO ketquamiennam (ngay, html) VALUES ('${currentDay.getFullYear()}-${
+          currentDay.getMonth() + 1
+        }-${currentDay.getDate()}', "${content}")`;
+        db.query(insertStatement, (err, result) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+      }
+    } else {
+      console.log("Da cap nhat mien nam");
+    }
+  });
+};
+
+const updateKetQuaMienTrung = (req, res) => {
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Ho_Chi_Minh",
+  });
+  const currentVietnamDate = formatter.format(new Date());
+  const currentDay = new Date(currentVietnamDate);
+  // date string for url
+  const urlDateString = `${currentDay.getDate()}-${
+    currentDay.getMonth() + 1
+  }-${currentDay.getFullYear()}`;
+  // date string for sql statement
+  const sqlDateString = `${currentDay.getFullYear()}-${
+    currentDay.getMonth() + 1
+  }-${currentDay.getDate()}`;
+
+  // check in database
+  var selectStatement = `SELECT html FROM ketquamientrung WHERE ngay = "${sqlDateString}"`;
+  db.query(selectStatement, async (err, result) => {
+    if (err) {
+      return res.status(404).json({ error: err });
+    }
+    if (!result[0]) {
+      console.log("Mien trung chua co");
+      const response = await fetch(
+        `https://www.hdmediagroup.vn/xo-so-mien-trung-ngay-${urlDateString}.html`
+      );
+      const htmlString = await response.text();
+      const $ = cheerio.load(htmlString);
+      const contentHtml = $(
+        "form#SzXoSoMienTrungForm > div:first > table > tbody > tr:nth-child(2) > td:nth-child(2) > table"
+      ).html();
+      if (contentHtml) {
+        const content = contentHtml.replace(/"/g, "'");
+        var insertStatement = `INSERT INTO ketquamientrung (ngay, html) VALUES ('${currentDay.getFullYear()}-${
+          currentDay.getMonth() + 1
+        }-${currentDay.getDate()}', "${content}")`;
+        db.query(insertStatement, (err, result) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+      }
+    } else {
+      console.log("Da cap nhat mien trung");
+    }
+  });
+};
+
 const updateDacBietTuan = async (req, res) => {
   const response = await fetch(
     `https://www.hdmediagroup.vn/thong_ke_dac_biet_tuan.html`
@@ -277,21 +310,7 @@ const updateDacBietTuan = async (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      console.log("Da cap nhat giai dac biet tuan!");
-    }
-  });
-};
-
-const getDacBietThang = async (req, res) => {
-  var selectStatement = `SELECT html FROM dacbietthang`;
-  db.query(selectStatement, (err, result) => {
-    if (err) {
-      return res.status(404).json({ error: err });
-    }
-    if (result[0]) {
-      return res.status(200).json({ result: result[0].html });
-    } else {
-      return res.status(200).json({ result: "" });
+      console.log("Da cap nhat dac biet tuan");
     }
   });
 };
@@ -309,23 +328,7 @@ const updateDacBietThang = async () => {
     if (err) {
       console.log(err);
     } else {
-      console.log("Da cap nhat giai dac biet thang!");
-    }
-  });
-};
-
-const getDacBietNam = async (req, res) => {
-  const { nam } = req.params;
-
-  var selectStatement = `SELECT html FROM dacbietnam WHERE nam = "${nam}"`;
-  db.query(selectStatement, (err, result) => {
-    if (err) {
-      return res.status(404).json({ error: err });
-    }
-    if (result[0]) {
-      return res.status(200).json({ result: result[0].html });
-    } else {
-      return res.status(200).json({ result: "" });
+      console.log("Da cap nhat dac biet thang");
     }
   });
 };
@@ -362,7 +365,7 @@ const capnhatNam = async (year) => {
     if (err) {
       console.log(err);
     } else {
-      console.log("Da cap nhat giai dac biet nam!");
+      console.log("Da cap nhat dac biet nam");
     }
   });
 };
@@ -379,7 +382,7 @@ const themNam = async (year) => {
     if (err) {
       console.log(err);
     } else {
-      console.log("Da them giai dac biet nam!");
+      console.log("Da them dac biet nam");
     }
   });
 };
