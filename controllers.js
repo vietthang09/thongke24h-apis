@@ -1,5 +1,6 @@
 const db = require("./db");
 const cheerio = require("cheerio");
+const axios = require("axios");
 
 const getKetQuaMienBac = async (req, res) => {
   const { ngay } = req.params;
@@ -176,10 +177,10 @@ const updateKetQuaMienBac = (req, res) => {
     }
     if (!result[0]) {
       console.log("Mien bac chua co");
-      const response = await fetch(
+      const response = await axios.get(
         `https://www.hdmediagroup.vn/ket-qua-xo-so-mien-bac-ngay-${urlDateString}.html`
       );
-      const htmlString = await response.text();
+      const htmlString = await response.data;
       const $ = cheerio.load(htmlString);
       const contentHtml = $(
         "form#XoSoNgayForm > div:first > table > tbody > tr:nth-child(2) > td:nth-child(2) > table"
@@ -224,10 +225,10 @@ const updateKetQuaMienNam = (req, res) => {
     }
     if (!result[0]) {
       console.log("Mien nam chua co");
-      const response = await fetch(
+      const response = await axios.get(
         `https://www.hdmediagroup.vn/xo-so-mien-nam-ngay-${urlDateString}.html`
       );
-      const htmlString = await response.text();
+      const htmlString = await response.data;
       const $ = cheerio.load(htmlString);
       const contentHtml = $(
         "form#SzXoSoMienNamForm > div:first > table > tbody > tr:nth-child(2) > td:nth-child(2) > table"
@@ -272,10 +273,10 @@ const updateKetQuaMienTrung = (req, res) => {
     }
     if (!result[0]) {
       console.log("Mien trung chua co");
-      const response = await fetch(
+      const response = await axios.get(
         `https://www.hdmediagroup.vn/xo-so-mien-trung-ngay-${urlDateString}.html`
       );
-      const htmlString = await response.text();
+      const htmlString = await response.data;
       const $ = cheerio.load(htmlString);
       const contentHtml = $(
         "form#SzXoSoMienTrungForm > div:first > table > tbody > tr:nth-child(2) > td:nth-child(2) > table"
@@ -298,10 +299,10 @@ const updateKetQuaMienTrung = (req, res) => {
 };
 
 const updateDacBietTuan = async (req, res) => {
-  const response = await fetch(
+  const response = await axios.get(
     `https://www.hdmediagroup.vn/thong_ke_dac_biet_tuan.html`
   );
-  const htmlString = await response.text();
+  const htmlString = await response.data;
   const $ = cheerio.load(htmlString);
   const body = $("div.content").html().replace(/"/g, "'");
 
@@ -316,10 +317,10 @@ const updateDacBietTuan = async (req, res) => {
 };
 
 const updateDacBietThang = async () => {
-  const response = await fetch(
+  const response = await axios.get(
     `https://www.hdmediagroup.vn/giaidbtheothang.html`
   );
-  const htmlString = await response.text();
+  const htmlString = await response.data;
   const $ = cheerio.load(htmlString);
   const body = $.html().replace(/"/g, "'");
 
@@ -354,10 +355,10 @@ const updateDacBietNam = async () => {
 };
 
 const capnhatNam = async (year) => {
-  const response = await fetch(
+  const response = await axios.get(
     `https://thongkemienbac.com/thong-ke-giai-dac-biet-nam-${year}.html`
   );
-  const htmlString = await response.text();
+  const htmlString = await response.data;
   const $ = cheerio.load(htmlString);
   const content = $("section.content").html().replace(/"/g, "'");
   var insertStatement = `UPDATE dacbietnam SET html = "${content}" WHERE nam = "${year}"`;
@@ -371,10 +372,10 @@ const capnhatNam = async (year) => {
 };
 
 const themNam = async (year) => {
-  const response = await fetch(
+  const response = await axios.get(
     `https://thongkemienbac.com/thong-ke-giai-dac-biet-nam-${year}.html`
   );
-  const htmlString = await response.text();
+  const htmlString = await response.data;
   const $ = cheerio.load(htmlString);
   const content = $("section.content").html().replace(/"/g, "'");
   var insertStatement = `INSERT INTO dacbietnam (nam, html) VALUES (${year},"${content}")`;

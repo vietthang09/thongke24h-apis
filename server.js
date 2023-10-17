@@ -1,3 +1,4 @@
+const { default: axios } = require("axios");
 const db = require("./db");
 const cheerio = require("cheerio");
 
@@ -13,22 +14,14 @@ const stopCrawl = (year, month, day) => {
 };
 
 const testCrawling = async () => {
-  const response = await fetch(
-    `https://www.hdmediagroup.vn/ket-qua-xo-so-mien-bac-ngay-13-02-2010.html`
+  const response = await axios.get(
+    `https://www.hdmediagroup.vn/xo-so-mien-trung-ngay-17-10-2023.html`
   );
-  const htmlString = await response.text();
-  const $ = cheerio.load(htmlString);
-  const contentHtml = $(
-    "form#XoSoNgayForm > div:first > table > tbody > tr:nth-child(2) > td:nth-child(2) > table"
-  );
-  if (contentHtml.html()) {
-    const content = contentHtml.html().replace(/"/g, "'");
-    console.log(content);
-  } else {
-    console.log("NULLL");
-  }
+  // const htmlString = await response.text();
+  console.log(response.data);
 };
 
+testCrawling();
 
 const crawlDataMienBac = async () => {
   for (let year = 2010; year <= 2023; year++) {
