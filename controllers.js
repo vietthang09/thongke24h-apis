@@ -183,7 +183,11 @@ const getTanSuatLoTo = async (req, res) => {
 };
 
 const getCurrentTime = (req, res) => {
-  const current = new Date();
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Ho_Chi_Minh",
+  });
+  const currentVietnamDate = formatter.format(new Date());
+  const current = new Date(currentVietnamDate);
   return res.status(200).json({
     result: `${current.getHours()}-${current.getMinutes()}-${current.getSeconds()}`,
   });
