@@ -2,7 +2,6 @@ const db = require("./db");
 const cheerio = require("cheerio");
 const axios = require("axios");
 const moment = require("moment-timezone");
-const nation = "Vietnam";
 
 const getKetQuaMienBac = async (req, res) => {
   const { ngay } = req.params;
@@ -185,10 +184,9 @@ const getTanSuatLoTo = async (req, res) => {
 };
 
 const getCurrentTime = (req, res) => {
-  const offset = moment.tz(nation).utcOffset();
-  const current = new Date(Date.now() + offset * 60000);
+  const vietnamTime = moment().tz("Asia/Ho_Chi_Minh").format("HH:mm:ss");
   return res.status(200).json({
-    result: `${current.getHours()}-${current.getMinutes()}-${current.getSeconds()}`,
+    result: vietnamTime,
   });
 };
 
