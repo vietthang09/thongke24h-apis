@@ -154,6 +154,34 @@ const getDacBietNam = async (req, res) => {
   });
 };
 
+const getTanSuatLo = async (req, res) => {
+  var selectStatement = `SELECT html FROM tansuatlo`;
+  db.query(selectStatement, (err, result) => {
+    if (err) {
+      return res.status(404).json({ error: err });
+    }
+    if (result[0]) {
+      return res.status(200).json({ result: result[0].html });
+    } else {
+      return res.status(200).json({ result: "" });
+    }
+  });
+};
+
+const getTanSuatLoTo = async (req, res) => {
+  var selectStatement = `SELECT html FROM tansuatloto`;
+  db.query(selectStatement, (err, result) => {
+    if (err) {
+      return res.status(404).json({ error: err });
+    }
+    if (result[0]) {
+      return res.status(200).json({ result: result[0].html });
+    } else {
+      return res.status(200).json({ result: "" });
+    }
+  });
+};
+
 const updateKetQuaMienBac = (req, res) => {
   const formatter = new Intl.DateTimeFormat("en-US", {
     timeZone: "Asia/Ho_Chi_Minh",
@@ -185,11 +213,11 @@ const updateKetQuaMienBac = (req, res) => {
       const contentHtml = $(
         "form#XoSoNgayForm > div:first > table > tbody > tr:nth-child(2) > td:nth-child(2) > table"
       ).html();
-      const content = contentHtml.replace(/"/g, "'");
-      var insertStatement = `INSERT INTO ketquamienbac (ngay, html) VALUES ('${currentDay.getFullYear()}-${
-        currentDay.getMonth() + 1
-      }-${currentDay.getDate()}', "${content}")`;
       if (contentHtml) {
+        const content = contentHtml.replace(/"/g, "'");
+        var insertStatement = `INSERT INTO ketquamienbac (ngay, html) VALUES ('${currentDay.getFullYear()}-${
+          currentDay.getMonth() + 1
+        }-${currentDay.getDate()}', "${content}")`;
         db.query(insertStatement, (err, result) => {
           if (err) {
             console.log(err);
@@ -300,11 +328,11 @@ const updateKetQuaMienTrung = (req, res) => {
 
 const updateDacBietTuan = async (req, res) => {
   const response = await axios.get(
-    `https://www.hdmediagroup.vn/thong_ke_dac_biet_tuan.html`
+    `https://www.hdmediagroup.vn/giaidacbiettheotuan.html`
   );
   const htmlString = await response.data;
   const $ = cheerio.load(htmlString);
-  const body = $("div.content").html().replace(/"/g, "'");
+  const body = $("form#HeaderForm").html().replace(/"/g, "'");
 
   var insertStatement = `UPDATE dacbiettuan SET html = "${body}" WHERE id = 0`;
   db.query(insertStatement, (err, result) => {
@@ -388,6 +416,40 @@ const themNam = async (year) => {
   });
 };
 
+const updateTanSuatLo = async () => {
+  const response = await axios.get(`https://ketquade11.com/tan-suat-loto.html`);
+  const htmlString = await response.data;
+  const $ = cheerio.load(htmlString);
+  const body = $("table#normtable").html().replace(/"/g, "'");
+
+  var insertStatement = `UPDATE tansuatlo SET html = "${body}" WHERE id = 0`;
+  db.query(insertStatement, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Da cap nhat tan suat lo");
+    }
+  });
+};
+
+const updateTanSuatLoTo = async () => {
+  const response = await axios.get(
+    `https://ketquade11.com/tan-suat-loto-theo-cap.html`
+  );
+  const htmlString = await response.data;
+  const $ = cheerio.load(htmlString);
+  const body = $("table#normtable").html().replace(/"/g, "'");
+
+  var insertStatement = `UPDATE tansuatloto SET html = "${body}" WHERE id = 0`;
+  db.query(insertStatement, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Da cap nhat tan suat lo to");
+    }
+  });
+};
+
 module.exports = {
   getKetQuaMienBac,
   getKetQuaMienNam,
@@ -398,10 +460,14 @@ module.exports = {
   getDacBietTuan,
   getDacBietThang,
   getDacBietNam,
+  getTanSuatLo,
+  getTanSuatLoTo,
   updateKetQuaMienBac,
   updateKetQuaMienNam,
   updateKetQuaMienTrung,
   updateDacBietTuan,
   updateDacBietThang,
   updateDacBietNam,
+  updateTanSuatLo,
+  updateTanSuatLoTo,
 };

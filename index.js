@@ -10,6 +10,8 @@ const {
   updateDacBietTuan,
   updateDacBietThang,
   updateDacBietNam,
+  updateTanSuatLo,
+  updateTanSuatLoTo,
 } = require("./controllers");
 
 app.use(
@@ -29,6 +31,8 @@ cron.schedule("1 * * * * *", () => {
   updateDacBietTuan();
   updateDacBietThang();
   updateDacBietNam();
+  updateTanSuatLo();
+  updateTanSuatLoTo();
 });
 
 app.listen(5001, () => {
