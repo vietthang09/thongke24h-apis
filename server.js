@@ -1,8 +1,7 @@
 const { default: axios } = require("axios");
 const db = require("./db");
 const cheerio = require("cheerio");
-const moment = require("moment-timezone");
-const nation = "Vietnam";
+var moment = require('moment-timezone');
 const stopCrawl = (year, month, day) => {
   const today = new Date();
   return (
@@ -15,12 +14,8 @@ const stopCrawl = (year, month, day) => {
 };
 
 const testCrawling = async () => {
-  // Get the UTC offset of the nation
-  const offset = moment.tz(nation).utcOffset();
-
-  // Create a new Date object with the UTC offset
-  const now = new Date(Date.now() + offset * 60000);
-  console.log(now.getHours());
+  const vietnamTime = moment().tz("Asia/Ho_Chi_Minh").format("HH:mm:ss");
+  console.log(vietnamTime);
 };
 
 testCrawling();
