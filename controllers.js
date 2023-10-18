@@ -371,11 +371,7 @@ const updateDacBietThang = async () => {
 };
 
 const updateDacBietNam = async () => {
-  const formatter = new Intl.DateTimeFormat("en-US", {
-    timeZone: "Asia/Ho_Chi_Minh",
-  });
-  const currentVietnamDate = formatter.format(new Date());
-  const currentDay = new Date(currentVietnamDate);
+  const currentDay = moment().tz("Asia/Ho_Chi_Minh").toDate();
 
   var selectStatement = `SELECT html FROM dacbietnam WHERE nam = ${currentDay.getFullYear()}`;
   db.query(selectStatement, (err, result) => {

@@ -1,7 +1,7 @@
 const { default: axios } = require("axios");
 const db = require("./db");
 const cheerio = require("cheerio");
-var moment = require('moment-timezone');
+var moment = require("moment-timezone");
 const stopCrawl = (year, month, day) => {
   const today = new Date();
   return (
@@ -14,8 +14,16 @@ const stopCrawl = (year, month, day) => {
 };
 
 const testCrawling = async () => {
-  const vietnamTime = moment().tz("Asia/Ho_Chi_Minh").format("HH:mm:ss");
-  console.log(vietnamTime);
+  const startTime = moment()
+    .tz("Asia/Ho_Chi_Minh")
+    .set({ hour: 17, minute: 31, second: 0 })
+    .toDate();
+  const endTime = moment()
+    .tz("Asia/Ho_Chi_Minh")
+    .set({ hour: 17, minute: 40, second: 0 })
+    .toDate();
+  const currentTime = moment().tz("Asia/Ho_Chi_Minh").toDate();
+  console.log(startTime < currentTime && currentTime < endTime);
 };
 
 testCrawling();
