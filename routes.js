@@ -11,6 +11,7 @@ const {
   getDacBietNam,
   getTanSuatLo,
   getTanSuatLoTo,
+  getCurrentTime,
 } = require("./controllers");
 
 const router = express.Router();
@@ -26,5 +27,6 @@ router.get("/dacbietthang", getDacBietThang);
 router.get("/dacbietnam/:nam", getDacBietNam);
 router.get("/tansuatlo", getTanSuatLo);
 router.get("/tansuatloto", getTanSuatLoTo);
+router.get("/kiemtrathoigian", getCurrentTime);
 
 module.exports = router;

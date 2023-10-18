@@ -14,11 +14,16 @@ const stopCrawl = (year, month, day) => {
 };
 
 const testCrawling = async () => {
-  const response = await axios.get(
-    `https://www.hdmediagroup.vn/xo-so-mien-trung-ngay-17-10-2023.html`
-  );
-  // const htmlString = await response.text();
-  console.log(response.data);
+  const current = new Date()
+  // const response = await axios.get(
+  //   `https://www.hdmediagroup.vn/ket-qua-xo-so-mien-bac-ngay-18-10-2023.html`
+  // );
+  // const htmlString = await response.data;
+  // const $ = cheerio.load(htmlString);
+  // const contentHtml = $(
+  //   "form#XoSoNgayForm > div:first > table > tbody > tr:nth-child(2) > td:nth-child(2) > table"
+  //   // "form#XoSoNgayForm > div:first > table > tbody > tr:nth-child(2) > td:nth-child(2) > table"
+  // ).html();
 };
 
 testCrawling();

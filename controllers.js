@@ -182,6 +182,13 @@ const getTanSuatLoTo = async (req, res) => {
   });
 };
 
+const getCurrentTime = (req, res) => {
+  const current = new Date();
+  return res.status(200).json({
+    result: `${current.getHours()}-${current.getMinutes()}-${current.getSeconds()}`,
+  });
+};
+
 const updateKetQuaMienBac = (req, res) => {
   const formatter = new Intl.DateTimeFormat("en-US", {
     timeZone: "Asia/Ho_Chi_Minh",
@@ -462,6 +469,7 @@ module.exports = {
   getDacBietNam,
   getTanSuatLo,
   getTanSuatLoTo,
+  getCurrentTime,
   updateKetQuaMienBac,
   updateKetQuaMienNam,
   updateKetQuaMienTrung,
