@@ -1,7 +1,8 @@
 const { default: axios } = require("axios");
 const db = require("./db");
 const cheerio = require("cheerio");
-
+const moment = require("moment-timezone");
+const nation = "Vietnam";
 const stopCrawl = (year, month, day) => {
   const today = new Date();
   return (
@@ -14,16 +15,12 @@ const stopCrawl = (year, month, day) => {
 };
 
 const testCrawling = async () => {
-  const current = new Date()
-  // const response = await axios.get(
-  //   `https://www.hdmediagroup.vn/ket-qua-xo-so-mien-bac-ngay-18-10-2023.html`
-  // );
-  // const htmlString = await response.data;
-  // const $ = cheerio.load(htmlString);
-  // const contentHtml = $(
-  //   "form#XoSoNgayForm > div:first > table > tbody > tr:nth-child(2) > td:nth-child(2) > table"
-  //   // "form#XoSoNgayForm > div:first > table > tbody > tr:nth-child(2) > td:nth-child(2) > table"
-  // ).html();
+  // Get the UTC offset of the nation
+  const offset = moment.tz(nation).utcOffset();
+
+  // Create a new Date object with the UTC offset
+  const now = new Date(Date.now() + offset * 60000);
+  console.log(now.getHours());
 };
 
 testCrawling();
@@ -65,6 +62,7 @@ const crawlDataMienBac = async () => {
 };
 
 const crawlDataMienNam = async () => {
+  "Asia/Ho_Chi_Minh";
   for (let year = 2010; year <= 2023; year++) {
     for (let month = 1; month <= 12; month++) {
       for (let day = 1; day <= new Date(year, month, 0).getDate(); day++) {
