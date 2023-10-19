@@ -112,7 +112,8 @@ const getKetQuaMienTrung30Ngay = async (req, res) => {
 };
 
 const getDacBietTuan = async (req, res) => {
-  var selectStatement = `SELECT html FROM dacbiettuan`;
+  const { nam } = req.params;
+  var selectStatement = `SELECT html FROM dacbiettuan WHERE id = ${nam}`;
   db.query(selectStatement, (err, result) => {
     if (err) {
       return res.status(404).json({ error: err });
@@ -335,6 +336,46 @@ const updateKetQuaMienTrung = (req, res) => {
 };
 
 const updateDacBietTuan = async (req, res) => {
+  const currentDay = moment().tz("Asia/Ho_Chi_Minh").toDate();
+
+  var selectStatement = `SELECT html FROM dacbiettuan WHERE id = ${currentDay.getFullYear()}`;
+  db.query(selectStatement, async (err, result) => {
+    if (err) {
+      return res.status(404).json({ error: err });
+    }
+    if (result[0]) {
+      const response = await fetch(
+        `https://xskt.com.vn/thong-ke-giai-dac-biet-theo-nam/xsmb-${currentDay.getFullYear()}`
+      );
+      const htmlString = await response.text();
+      const $ = cheerio.load(htmlString);
+      const table = $("div.toanquoc > div > table.sp:last")
+        .html()
+        .replace(/"/g, "'");
+      var insertStatement = `UPDATE dacbiettuan SET html = "${table}" WHERE id = ${currentDay.getFullYear()}`;
+      db.query(insertStatement, (err, result) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+    } else {
+      const response = await fetch(
+        `https://xskt.com.vn/thong-ke-giai-dac-biet-theo-nam/xsmb-${currentDay.getFullYear()}`
+      );
+      const htmlString = await response.text();
+      const $ = cheerio.load(htmlString);
+      const table = $("div.toanquoc > div > table.sp:last")
+        .html()
+        .replace(/"/g, "'");
+      var insertStatement = `INSERT INTO dacbiettuan (id, html) VALUES (${currentDay.getFullYear()}, "${table}")`;
+      db.query(insertStatement, (err, result) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+    }
+  });
+
   const response = await axios.get(
     `https://www.hdmediagroup.vn/giaidacbiettheotuan.html`
   );

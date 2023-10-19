@@ -22,7 +22,7 @@ router.get("/ketquamientrung/:ngay", getKetQuaMienTrung);
 router.get("/ketquamienbac30ngay/:ngay", getKetQuaMienBac30Ngay);
 router.get("/ketquamiennam30ngay/:ngay", getKetQuaMienNam30Ngay);
 router.get("/ketquamientrung30ngay/:ngay", getKetQuaMienTrung30Ngay);
-router.get("/dacbiettuan", getDacBietTuan);
+router.get("/dacbiettuan/:nam", getDacBietTuan);
 router.get("/dacbietthang", getDacBietThang);
 router.get("/dacbietnam/:nam", getDacBietNam);
 router.get("/tansuatlo", getTanSuatLo);

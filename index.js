@@ -54,7 +54,6 @@ cron.schedule("1 * * * * *", () => {
     .toDate();
 
   const currentTime = moment().tz("Asia/Ho_Chi_Minh").toDate();
-
   if (startMienBac < currentTime && currentTime < endMienBac) {
     updateKetQuaMienBac();
     updateDacBietTuan();

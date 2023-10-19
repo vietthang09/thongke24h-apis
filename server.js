@@ -14,19 +14,64 @@ const stopCrawl = (year, month, day) => {
 };
 
 const testCrawling = async () => {
-  const startTime = moment()
-    .tz("Asia/Ho_Chi_Minh")
-    .set({ hour: 17, minute: 31, second: 0 })
-    .toDate();
-  const endTime = moment()
-    .tz("Asia/Ho_Chi_Minh")
-    .set({ hour: 17, minute: 40, second: 0 })
-    .toDate();
-  const currentTime = moment().tz("Asia/Ho_Chi_Minh").toDate();
-  console.log(startTime < currentTime && currentTime < endTime);
+  const currentDay = moment().tz("Asia/Ho_Chi_Minh").toDate();
+
+  var selectStatement = `SELECT html FROM dacbiettuan WHERE id = ${currentDay.getFullYear()}`;
+  db.query(selectStatement, async (err, result) => {
+    if (err) {
+      return res.status(404).json({ error: err });
+    }
+    if (result[0]) {
+      const response = await fetch(
+        `https://xskt.com.vn/thong-ke-giai-dac-biet-theo-nam/xsmb-${currentDay.getFullYear()}`
+      );
+      const htmlString = await response.text();
+      const $ = cheerio.load(htmlString);
+      const table = $("div.toanquoc > div > table.sp:last")
+        .html()
+        .replace(/"/g, "'");
+      var insertStatement = `UPDATE dacbiettuan SET html = "${table}" WHERE id = ${currentDay.getFullYear()}`;
+      db.query(insertStatement, (err, result) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+    } else {
+      const response = await fetch(
+        `https://xskt.com.vn/thong-ke-giai-dac-biet-theo-nam/xsmb-${currentDay.getFullYear()}`
+      );
+      const htmlString = await response.text();
+      const $ = cheerio.load(htmlString);
+      const table = $("div.toanquoc > div > table.sp:last")
+        .html()
+        .replace(/"/g, "'");
+      var insertStatement = `INSERT INTO dacbiettuan (id, html) VALUES (${currentDay.getFullYear()}, "${table}")`;
+      db.query(insertStatement, (err, result) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+    }
+  });
+
+  const response = await axios.get(
+    `https://www.hdmediagroup.vn/giaidacbiettheotuan.html`
+  );
+  const htmlString = await response.data;
+  const $ = cheerio.load(htmlString);
+  const body = $("form#HeaderForm").html().replace(/"/g, "'");
+
+  var insertStatement = `UPDATE dacbiettuan SET html = "${body}" WHERE id = 0`;
+  db.query(insertStatement, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Da cap nhat dac biet tuan");
+    }
+  });
 };
 
-testCrawling();
+// testCrawling();
 
 const crawlDataMienBac = async () => {
   for (let year = 2010; year <= 2023; year++) {
@@ -138,21 +183,25 @@ const crawlDataMienTrung = async () => {
 };
 
 const crawlDataDacBietTuan = async () => {
-  const response = await fetch(
-    `https://www.hdmediagroup.vn/thong_ke_dac_biet_tuan.html`
-  );
-  const htmlString = await response.text();
-  const $ = cheerio.load(htmlString);
-  const body = $("div.content").html().replace(/"/g, "'");
-
-  var insertStatement = `UPDATE dacbiettuan SET html = "${body}" WHERE id = 0`;
-  db.query(insertStatement, (err, result) => {
-    if (err) {
-      console.log(err);
-    }
-  });
+  for (let year = 2010; year <= 2023; year++) {
+    console.log("Saving", year);
+    const response = await fetch(
+      `https://xskt.com.vn/thong-ke-giai-dac-biet-theo-nam/xsmb-${year}`
+    );
+    const htmlString = await response.text();
+    const $ = cheerio.load(htmlString);
+    const table = $("div.toanquoc > div > table.sp:last")
+      .html()
+      .replace(/"/g, "'");
+    var insertStatement = `INSERT INTO dacbiettuan (id, html) VALUES (${year}, "${table}")`;
+    db.query(insertStatement, (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+  }
 };
-
+// crawlDataDacBietTuan();
 const crawlDataDacBietThang = async () => {
   const response = await fetch(
     `https://www.hdmediagroup.vn/giaidbtheothang.html`
