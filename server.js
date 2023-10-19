@@ -201,7 +201,7 @@ const crawlDataDacBietTuan = async () => {
     });
   }
 };
-// crawlDataDacBietTuan();
+crawlDataDacBietTuan();
 const crawlDataDacBietThang = async () => {
   const response = await fetch(
     `https://www.hdmediagroup.vn/giaidbtheothang.html`
