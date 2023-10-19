@@ -28,29 +28,29 @@ app.use("/api", thongke24h);
 cron.schedule("1 * * * * *", () => {
   const startMienBac = moment()
     .tz("Asia/Ho_Chi_Minh")
-    .set({ hour: 18, minute: 36, second: 0 })
+    .set({ hour: 18, minute: 31, second: 0 })
     .toDate();
   const endMienBac = moment()
     .tz("Asia/Ho_Chi_Minh")
-    .set({ hour: 18, minute: 40, second: 0 })
+    .set({ hour: 18, minute: 35, second: 0 })
     .toDate();
 
   const startMienNam = moment()
     .tz("Asia/Ho_Chi_Minh")
-    .set({ hour: 16, minute: 36, second: 0 })
+    .set({ hour: 18, minute: 31, second: 0 })
     .toDate();
   const endMienNam = moment()
     .tz("Asia/Ho_Chi_Minh")
-    .set({ hour: 16, minute: 40, second: 0 })
+    .set({ hour: 18, minute: 35, second: 0 })
     .toDate();
 
   const startMienTrung = moment()
     .tz("Asia/Ho_Chi_Minh")
-    .set({ hour: 17, minute: 36, second: 0 })
+    .set({ hour: 18, minute: 31, second: 0 })
     .toDate();
   const endMienTrung = moment()
     .tz("Asia/Ho_Chi_Minh")
-    .set({ hour: 17, minute: 40, second: 0 })
+    .set({ hour: 18, minute: 35, second: 0 })
     .toDate();
 
   const currentTime = moment().tz("Asia/Ho_Chi_Minh").toDate();
