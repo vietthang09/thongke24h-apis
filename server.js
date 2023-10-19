@@ -1,4 +1,4 @@
-const { default: axios } = require("axios");
+const axios = require("axios");
 const db = require("./db");
 const cheerio = require("cheerio");
 var moment = require("moment-timezone");
@@ -185,10 +185,10 @@ const crawlDataMienTrung = async () => {
 const crawlDataDacBietTuan = async () => {
   for (let year = 2010; year <= 2023; year++) {
     console.log("Saving", year);
-    const response = await fetch(
+    const response = await axios.get(
       `https://xskt.com.vn/thong-ke-giai-dac-biet-theo-nam/xsmb-${year}`
     );
-    const htmlString = await response.text();
+    const htmlString = await response.data;
     const $ = cheerio.load(htmlString);
     const table = $("div.toanquoc > div > table.sp:last")
       .html()
