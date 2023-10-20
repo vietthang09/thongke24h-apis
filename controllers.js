@@ -375,22 +375,6 @@ const updateDacBietTuan = async (req, res) => {
       });
     }
   });
-
-  const response = await axios.get(
-    `https://www.hdmediagroup.vn/giaidacbiettheotuan.html`
-  );
-  const htmlString = await response.data;
-  const $ = cheerio.load(htmlString);
-  const body = $("form#HeaderForm").html().replace(/"/g, "'");
-
-  var insertStatement = `UPDATE dacbiettuan SET html = "${body}" WHERE id = 0`;
-  db.query(insertStatement, (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Da cap nhat dac biet tuan");
-    }
-  });
 };
 
 const updateDacBietThang = async () => {
