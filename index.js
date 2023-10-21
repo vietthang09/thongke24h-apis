@@ -53,14 +53,21 @@ cron.schedule("1 * * * * *", () => {
     .set({ hour: 18, minute: 35, second: 0 })
     .toDate();
 
+  const startTanSuat = moment()
+    .tz("Asia/Ho_Chi_Minh")
+    .set({ hour: 19, minute: 0, second: 0 })
+    .toDate();
+  const endTanSuat = moment()
+    .tz("Asia/Ho_Chi_Minh")
+    .set({ hour: 19, minute: 5, second: 0 })
+    .toDate();
+
   const currentTime = moment().tz("Asia/Ho_Chi_Minh").toDate();
   if (startMienBac < currentTime && currentTime < endMienBac) {
     updateKetQuaMienBac();
     updateDacBietTuan();
     updateDacBietThang();
     updateDacBietNam();
-    updateTanSuatLo();
-    updateTanSuatLoTo();
   } else {
     console.log("Doi cap nhat mien bac");
   }
@@ -73,6 +80,12 @@ cron.schedule("1 * * * * *", () => {
     updateKetQuaMienTrung();
   } else {
     console.log("Doi cap nhat mien trung");
+  }
+  if (startTanSuat < currentTime && currentTime < endTanSuat) {
+    updateTanSuatLo();
+    updateTanSuatLoTo();
+  } else {
+    console.log("Doi cap nhat tan suat");
   }
 });
 
