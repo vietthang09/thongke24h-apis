@@ -343,7 +343,7 @@ const updateDacBietTuan = async (req, res) => {
     if (err) {
       return res.status(404).json({ error: err });
     }
-    if (result[0]) {
+    if (!result[0]) {
       const response = await fetch(
         `https://xskt.com.vn/thong-ke-giai-dac-biet-theo-nam/xsmb-${currentDay.getFullYear()}`
       );
@@ -352,7 +352,7 @@ const updateDacBietTuan = async (req, res) => {
       const table = $("div.toanquoc > div > table.sp:last")
         .html()
         .replace(/"/g, "'");
-      var insertStatement = `UPDATE dacbiettuan SET html = "${table}" WHERE id = ${currentDay.getFullYear()}`;
+      var insertStatement = `INSERT INTO dacbiettuan (id, html) VALUES (${currentDay.getFullYear()}, "${table}")`;
       db.query(insertStatement, (err, result) => {
         if (err) {
           console.log(err);
@@ -367,7 +367,7 @@ const updateDacBietTuan = async (req, res) => {
       const table = $("div.toanquoc > div > table.sp:last")
         .html()
         .replace(/"/g, "'");
-      var insertStatement = `INSERT INTO dacbiettuan (id, html) VALUES (${currentDay.getFullYear()}, "${table}")`;
+      var insertStatement = `UPDATE dacbiettuan SET html = "${table}" WHERE id = ${currentDay.getFullYear()}`;
       db.query(insertStatement, (err, result) => {
         if (err) {
           console.log(err);

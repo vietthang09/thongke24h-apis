@@ -65,9 +65,6 @@ cron.schedule("1 * * * * *", () => {
   const currentTime = moment().tz("Asia/Ho_Chi_Minh").toDate();
   if (startMienBac < currentTime && currentTime < endMienBac) {
     updateKetQuaMienBac();
-    updateDacBietTuan();
-    updateDacBietThang();
-    updateDacBietNam();
   } else {
     console.log("Doi cap nhat mien bac");
   }
@@ -82,6 +79,9 @@ cron.schedule("1 * * * * *", () => {
     console.log("Doi cap nhat mien trung");
   }
   if (startTanSuat < currentTime && currentTime < endTanSuat) {
+    updateDacBietThang();
+    updateDacBietNam();
+    updateDacBietTuan();
     updateTanSuatLo();
     updateTanSuatLoTo();
   } else {
