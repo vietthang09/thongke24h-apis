@@ -344,10 +344,10 @@ const updateDacBietTuan = async (req, res) => {
       return res.status(404).json({ error: err });
     }
     if (!result[0]) {
-      const response = await fetch(
+      const response = await axios.get(
         `https://xskt.com.vn/thong-ke-giai-dac-biet-theo-nam/xsmb-${currentDay.getFullYear()}`
       );
-      const htmlString = await response.text();
+      const htmlString = await response.data;
       const $ = cheerio.load(htmlString);
       const table = $("div.toanquoc > div > table.sp:last")
         .html()
@@ -359,10 +359,10 @@ const updateDacBietTuan = async (req, res) => {
         }
       });
     } else {
-      const response = await fetch(
+      const response = await axios.get(
         `https://xskt.com.vn/thong-ke-giai-dac-biet-theo-nam/xsmb-${currentDay.getFullYear()}`
       );
-      const htmlString = await response.text();
+      const htmlString = await response.data;
       const $ = cheerio.load(htmlString);
       const table = $("div.toanquoc > div > table.sp:last")
         .html()
