@@ -75,10 +75,10 @@ cron.schedule("1 * * * * *", () => {
   if (startTanSuat < currentTime && currentTime < endTanSuat) {
     updateDacBietThang();
     updateDacBietNam();
+    updateDacBietTuan();
+    updateTanSuatLo();
+    updateTanSuatLoTo();
   }
-  updateDacBietTuan();
-  updateTanSuatLo();
-  updateTanSuatLoTo();
 });
 
 app.listen(5001, () => {
