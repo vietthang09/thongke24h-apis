@@ -65,28 +65,20 @@ cron.schedule("1 * * * * *", () => {
   const currentTime = moment().tz("Asia/Ho_Chi_Minh").toDate();
   if (startMienBac < currentTime && currentTime < endMienBac) {
     updateKetQuaMienBac();
-  } else {
-    console.log("Doi cap nhat mien bac");
   }
   if (startMienNam < currentTime && currentTime < endMienNam) {
     updateKetQuaMienNam();
-  } else {
-    console.log("Doi cap nhat mien nam");
   }
   if (startMienTrung < currentTime && currentTime < endMienTrung) {
     updateKetQuaMienTrung();
-  } else {
-    console.log("Doi cap nhat mien trung");
   }
   if (startTanSuat < currentTime && currentTime < endTanSuat) {
     updateDacBietThang();
     updateDacBietNam();
-    updateDacBietTuan();
-    updateTanSuatLo();
-    updateTanSuatLoTo();
-  } else {
-    console.log("Doi cap nhat tan suat");
   }
+  updateDacBietTuan();
+  updateTanSuatLo();
+  updateTanSuatLoTo();
 });
 
 app.listen(5001, () => {
