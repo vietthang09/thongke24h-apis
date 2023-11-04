@@ -79,6 +79,12 @@ cron.schedule("1 * * * * *", () => {
     updateTanSuatLo();
     updateTanSuatLoTo();
   }
+
+  // Debuging
+  console.log(
+    startMienBac.getHours() + ":" + startMienBac.getMinutes(),
+    currentTime.getHours() + ":" + currentTime.getMinutes()
+  );
 });
 
 app.listen(5001, () => {
