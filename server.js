@@ -14,27 +14,16 @@ const stopCrawl = (year, month, day) => {
 };
 
 const testCrawling = async () => {
-  const response = await axios.get(`https://ketquade11.com/tan-suat-loto.html`);
-  const htmlString = await response.data;
-  const $ = cheerio.load(htmlString);
-  const body = $("table#normtable").html().replace(/"/g, "'");
-  console.log(body);
-  // var insertStatement = `UPDATE tansuatlo SET html = "${body}" WHERE id = 0`;
-  // db.query(insertStatement, (err, result) => {
-  //   if (err) {
-  //     console.log(err);
-  //   } else {
-  //     console.log("Da cap nhat tan suat lo");
-  //   }
-  // });
+  const vietnamTime = moment().tz("Asia/Ho_Chi_Minh");
+  console.log(new Date(vietnamTime));
 };
 
-testCrawling();
+// testCrawling();
 
 const crawlDataMienBac = async () => {
-  for (let year = 2010; year <= 2023; year++) {
-    for (let month = 1; month <= 12; month++) {
-      for (let day = 1; day <= new Date(year, month, 0).getDate(); day++) {
+  for (let year = 2023; year <= 2023; year++) {
+    for (let month = 11; month <= 11; month++) {
+      for (let day = 1; day <= 6; day++) {
         const todayString = `${day < 10 ? "0" + day : day}-${
           month < 10 ? "0" + month : month
         }-${year}`;
@@ -68,10 +57,9 @@ const crawlDataMienBac = async () => {
 };
 
 const crawlDataMienNam = async () => {
-  "Asia/Ho_Chi_Minh";
-  for (let year = 2010; year <= 2023; year++) {
-    for (let month = 1; month <= 12; month++) {
-      for (let day = 1; day <= new Date(year, month, 0).getDate(); day++) {
+  for (let year = 2023; year <= 2023; year++) {
+    for (let month = 11; month <= 11; month++) {
+      for (let day = 1; day <= 6; day++) {
         const todayString = `${day < 10 ? "0" + day : day}-${
           month < 10 ? "0" + month : month
         }-${year}`;
@@ -105,9 +93,9 @@ const crawlDataMienNam = async () => {
 };
 
 const crawlDataMienTrung = async () => {
-  for (let year = 2010; year <= 2023; year++) {
-    for (let month = 1; month <= 12; month++) {
-      for (let day = 1; day <= new Date(year, month, 0).getDate(); day++) {
+  for (let year = 2023; year <= 2023; year++) {
+    for (let month = 11; month <= 11; month++) {
+      for (let day = 1; day <= 6; day++) {
         const todayString = `${day < 10 ? "0" + day : day}-${
           month < 10 ? "0" + month : month
         }-${year}`;
@@ -139,6 +127,10 @@ const crawlDataMienTrung = async () => {
     }
   }
 };
+
+crawlDataMienBac();
+crawlDataMienNam();
+crawlDataMienTrung();
 
 const crawlDataDacBietTuan = async () => {
   for (let year = 2010; year <= 2023; year++) {

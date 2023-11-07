@@ -25,7 +25,7 @@ app.use(express.json());
 
 app.use("/api", thongke24h);
 
-cron.schedule("* * * * * *", () => {
+cron.schedule("1 * * * * *", () => {
   const startMienBac = moment()
     .tz("Asia/Ho_Chi_Minh")
     .set({ hour: 18, minute: 31, second: 0 })
@@ -79,24 +79,6 @@ cron.schedule("* * * * * *", () => {
     updateTanSuatLo();
     updateTanSuatLoTo();
   }
-
-  // Debuging
-  console.log(
-    startMienBac.getMonth() +
-      ":" +
-      startMienBac.getDate() +
-      " " +
-      startMienBac.getHours() +
-      ":" +
-      startMienBac.getMinutes(),
-    currentTime.getMonth() +
-      ":" +
-      currentTime.getDate() +
-      " " +
-      currentTime.getHours() +
-      ":" +
-      currentTime.getMinutes()
-  );
 });
 
 app.listen(5001, () => {

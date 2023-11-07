@@ -192,11 +192,7 @@ const getCurrentTime = (req, res) => {
 };
 
 const updateKetQuaMienBac = (req, res) => {
-  const formatter = new Intl.DateTimeFormat("en-US", {
-    timeZone: "Asia/Ho_Chi_Minh",
-  });
-  const currentVietnamDate = formatter.format(new Date());
-  const currentDay = new Date(currentVietnamDate);
+  const currentDay = new Date(moment().tz("Asia/Ho_Chi_Minh"));
   // date string for url
   const urlDateString = `${currentDay.getDate()}-${
     currentDay.getMonth() + 1
@@ -240,11 +236,7 @@ const updateKetQuaMienBac = (req, res) => {
 };
 
 const updateKetQuaMienNam = (req, res) => {
-  const formatter = new Intl.DateTimeFormat("en-US", {
-    timeZone: "Asia/Ho_Chi_Minh",
-  });
-  const currentVietnamDate = formatter.format(new Date());
-  const currentDay = new Date(currentVietnamDate);
+  const currentDay = new Date(moment().tz("Asia/Ho_Chi_Minh"));
   // date string for url
   const urlDateString = `${currentDay.getDate()}-${
     currentDay.getMonth() + 1
@@ -288,11 +280,7 @@ const updateKetQuaMienNam = (req, res) => {
 };
 
 const updateKetQuaMienTrung = (req, res) => {
-  const formatter = new Intl.DateTimeFormat("en-US", {
-    timeZone: "Asia/Ho_Chi_Minh",
-  });
-  const currentVietnamDate = formatter.format(new Date());
-  const currentDay = new Date(currentVietnamDate);
+  const currentDay = new Date(moment().tz("Asia/Ho_Chi_Minh"));
   // date string for url
   const urlDateString = `${currentDay.getDate()}-${
     currentDay.getMonth() + 1
