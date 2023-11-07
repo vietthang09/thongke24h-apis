@@ -42,10 +42,10 @@ const crawlDataMienBac = async () => {
         const todayString = `${day < 10 ? "0" + day : day}-${
           month < 10 ? "0" + month : month
         }-${year}`;
-        if (stopCrawl(year, month, day)) {
-          console.log("Finished at", todayString);
-          return;
-        }
+        // if (stopCrawl(year, month, day)) {
+        //   console.log("Finished at", todayString);
+        //   return;
+        // }
         console.log("Saving", todayString);
         const response = await fetch(
           `https://www.hdmediagroup.vn/ket-qua-xo-so-mien-bac-ngay-${todayString}.html`
@@ -78,10 +78,10 @@ const crawlDataMienNam = async () => {
         const todayString = `${day < 10 ? "0" + day : day}-${
           month < 10 ? "0" + month : month
         }-${year}`;
-        if (stopCrawl(year, month, day)) {
-          console.log("Finished at", todayString);
-          return;
-        }
+        // if (stopCrawl(year, month, day)) {
+        //   console.log("Finished at", todayString);
+        //   return;
+        // }
         console.log("Saving", todayString);
         const response = await fetch(
           `https://www.hdmediagroup.vn/xo-so-mien-nam-ngay-${todayString}.html`
@@ -114,10 +114,10 @@ const crawlDataMienTrung = async () => {
         const todayString = `${day < 10 ? "0" + day : day}-${
           month < 10 ? "0" + month : month
         }-${year}`;
-        if (stopCrawl(year, month, day)) {
-          console.log("Finished at", todayString);
-          return;
-        }
+        // if (stopCrawl(year, month, day)) {
+        //   console.log("Finished at", todayString);
+        //   return;
+        // }
         console.log("Saving", todayString);
         const response = await fetch(
           `https://www.hdmediagroup.vn/xo-so-mien-trung-ngay-${todayString}.html`
