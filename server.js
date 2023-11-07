@@ -14,8 +14,23 @@ const stopCrawl = (year, month, day) => {
 };
 
 const testCrawling = async () => {
-  const vietnamTime = moment().tz("Asia/Ho_Chi_Minh");
-  console.log(new Date(vietnamTime));
+  const currentDay = new Date(moment().tz("Asia/Ho_Chi_Minh"));
+  // date string for url
+  const urlDateString = `${
+    currentDay.getDate() < 10
+      ? "0" + currentDay.getDate()
+      : currentDay.getDate()
+  }-${
+    currentDay.getMonth() + 1 < 10
+      ? "0" + (currentDay.getMonth() + 1)
+      : currentDay.getMonth() + 1
+  }-${currentDay.getFullYear()}`;
+  // date string for sql statement
+  const sqlDateString = `${currentDay.getFullYear()}-${
+    currentDay.getMonth() + 1
+  }-${currentDay.getDate()}`;
+  console.log(urlDateString);
+  console.log(sqlDateString);
 };
 
 // testCrawling();
@@ -23,7 +38,7 @@ const testCrawling = async () => {
 const crawlDataMienBac = async () => {
   for (let year = 2023; year <= 2023; year++) {
     for (let month = 11; month <= 11; month++) {
-      for (let day = 1; day <= 6; day++) {
+      for (let day = 7; day <= 7; day++) {
         const todayString = `${day < 10 ? "0" + day : day}-${
           month < 10 ? "0" + month : month
         }-${year}`;
@@ -59,7 +74,7 @@ const crawlDataMienBac = async () => {
 const crawlDataMienNam = async () => {
   for (let year = 2023; year <= 2023; year++) {
     for (let month = 11; month <= 11; month++) {
-      for (let day = 1; day <= 6; day++) {
+      for (let day = 7; day <= 7; day++) {
         const todayString = `${day < 10 ? "0" + day : day}-${
           month < 10 ? "0" + month : month
         }-${year}`;
@@ -95,7 +110,7 @@ const crawlDataMienNam = async () => {
 const crawlDataMienTrung = async () => {
   for (let year = 2023; year <= 2023; year++) {
     for (let month = 11; month <= 11; month++) {
-      for (let day = 1; day <= 6; day++) {
+      for (let day = 7; day <= 7; day++) {
         const todayString = `${day < 10 ? "0" + day : day}-${
           month < 10 ? "0" + month : month
         }-${year}`;

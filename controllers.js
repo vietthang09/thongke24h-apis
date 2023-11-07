@@ -194,13 +194,15 @@ const getCurrentTime = (req, res) => {
 const updateKetQuaMienBac = (req, res) => {
   const currentDay = new Date(moment().tz("Asia/Ho_Chi_Minh"));
   // date string for url
-  const urlDateString = `${currentDay.getDate()}-${
-    currentDay.getMonth() + 1
+  const urlDateString = `${
+    currentDay.getDate() < 10
+      ? "0" + currentDay.getDate()
+      : currentDay.getDate()
+  }-${
+    currentDay.getMonth() + 1 < 10
+      ? "0" + (currentDay.getMonth() + 1)
+      : currentDay.getMonth() + 1
   }-${currentDay.getFullYear()}`;
-  // date string for sql statement
-  const sqlDateString = `${currentDay.getFullYear()}-${
-    currentDay.getMonth() + 1
-  }-${currentDay.getDate()}`;
 
   // Check in database
   var selectStatement = `SELECT html FROM ketquamienbac WHERE ngay = "${sqlDateString}"`;
@@ -238,13 +240,15 @@ const updateKetQuaMienBac = (req, res) => {
 const updateKetQuaMienNam = (req, res) => {
   const currentDay = new Date(moment().tz("Asia/Ho_Chi_Minh"));
   // date string for url
-  const urlDateString = `${currentDay.getDate()}-${
-    currentDay.getMonth() + 1
+  const urlDateString = `${
+    currentDay.getDate() < 10
+      ? "0" + currentDay.getDate()
+      : currentDay.getDate()
+  }-${
+    currentDay.getMonth() + 1 < 10
+      ? "0" + (currentDay.getMonth() + 1)
+      : currentDay.getMonth() + 1
   }-${currentDay.getFullYear()}`;
-  // date string for sql statement
-  const sqlDateString = `${currentDay.getFullYear()}-${
-    currentDay.getMonth() + 1
-  }-${currentDay.getDate()}`;
 
   // check in database
   var selectStatement = `SELECT html FROM ketquamiennam WHERE ngay = "${sqlDateString}"`;
@@ -282,13 +286,15 @@ const updateKetQuaMienNam = (req, res) => {
 const updateKetQuaMienTrung = (req, res) => {
   const currentDay = new Date(moment().tz("Asia/Ho_Chi_Minh"));
   // date string for url
-  const urlDateString = `${currentDay.getDate()}-${
-    currentDay.getMonth() + 1
+  const urlDateString = `${
+    currentDay.getDate() < 10
+      ? "0" + currentDay.getDate()
+      : currentDay.getDate()
+  }-${
+    currentDay.getMonth() + 1 < 10
+      ? "0" + (currentDay.getMonth() + 1)
+      : currentDay.getMonth() + 1
   }-${currentDay.getFullYear()}`;
-  // date string for sql statement
-  const sqlDateString = `${currentDay.getFullYear()}-${
-    currentDay.getMonth() + 1
-  }-${currentDay.getDate()}`;
 
   // check in database
   var selectStatement = `SELECT html FROM ketquamientrung WHERE ngay = "${sqlDateString}"`;
