@@ -38,14 +38,14 @@ const testCrawling = async () => {
 const crawlDataMienBac = async () => {
   for (let year = 2023; year <= 2023; year++) {
     for (let month = 11; month <= 11; month++) {
-      for (let day = 7; day <= 7; day++) {
+      for (let day = 8; day <= 9; day++) {
         const todayString = `${day < 10 ? "0" + day : day}-${
           month < 10 ? "0" + month : month
         }-${year}`;
-        // if (stopCrawl(year, month, day)) {
-        //   console.log("Finished at", todayString);
-        //   return;
-        // }
+        if (stopCrawl(year, month, day)) {
+          console.log("Finished at", todayString);
+          return;
+        }
         console.log("Saving", todayString);
         const response = await fetch(
           `https://www.hdmediagroup.vn/ket-qua-xo-so-mien-bac-ngay-${todayString}.html`
@@ -74,14 +74,14 @@ const crawlDataMienBac = async () => {
 const crawlDataMienNam = async () => {
   for (let year = 2023; year <= 2023; year++) {
     for (let month = 11; month <= 11; month++) {
-      for (let day = 7; day <= 7; day++) {
+      for (let day = 8; day <= 9; day++) {
         const todayString = `${day < 10 ? "0" + day : day}-${
           month < 10 ? "0" + month : month
         }-${year}`;
-        // if (stopCrawl(year, month, day)) {
-        //   console.log("Finished at", todayString);
-        //   return;
-        // }
+        if (stopCrawl(year, month, day)) {
+          console.log("Finished at", todayString);
+          return;
+        }
         console.log("Saving", todayString);
         const response = await fetch(
           `https://www.hdmediagroup.vn/xo-so-mien-nam-ngay-${todayString}.html`
@@ -110,14 +110,14 @@ const crawlDataMienNam = async () => {
 const crawlDataMienTrung = async () => {
   for (let year = 2023; year <= 2023; year++) {
     for (let month = 11; month <= 11; month++) {
-      for (let day = 7; day <= 7; day++) {
+      for (let day = 8; day <= 9; day++) {
         const todayString = `${day < 10 ? "0" + day : day}-${
           month < 10 ? "0" + month : month
         }-${year}`;
-        // if (stopCrawl(year, month, day)) {
-        //   console.log("Finished at", todayString);
-        //   return;
-        // }
+        if (stopCrawl(year, month, day)) {
+          console.log("Finished at", todayString);
+          return;
+        }
         console.log("Saving", todayString);
         const response = await fetch(
           `https://www.hdmediagroup.vn/xo-so-mien-trung-ngay-${todayString}.html`

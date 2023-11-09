@@ -185,7 +185,7 @@ const getTanSuatLoTo = async (req, res) => {
 };
 
 const getCurrentTime = (req, res) => {
-  const vietnamTime = moment().tz("Asia/Ho_Chi_Minh").format("HH:mm:ss");
+  const vietnamTime = moment().tz("Asia/Ho_Chi_Minh");
   return res.status(200).json({
     result: vietnamTime,
   });
@@ -203,6 +203,16 @@ const updateKetQuaMienBac = (req, res) => {
       ? "0" + (currentDay.getMonth() + 1)
       : currentDay.getMonth() + 1
   }-${currentDay.getFullYear()}`;
+
+  const sqlDateString = `${currentDay.getFullYear()}-${
+    currentDay.getMonth() + 1 < 10
+      ? "0" + (currentDay.getMonth() + 1)
+      : currentDay.getMonth() + 1
+  }-${
+    currentDay.getDate() < 10
+      ? "0" + currentDay.getDate()
+      : currentDay.getDate()
+  }`;
 
   // Check in database
   var selectStatement = `SELECT html FROM ketquamienbac WHERE ngay = "${sqlDateString}"`;
@@ -250,6 +260,16 @@ const updateKetQuaMienNam = (req, res) => {
       : currentDay.getMonth() + 1
   }-${currentDay.getFullYear()}`;
 
+  const sqlDateString = `${currentDay.getFullYear()}-${
+    currentDay.getMonth() + 1 < 10
+      ? "0" + (currentDay.getMonth() + 1)
+      : currentDay.getMonth() + 1
+  }-${
+    currentDay.getDate() < 10
+      ? "0" + currentDay.getDate()
+      : currentDay.getDate()
+  }`;
+
   // check in database
   var selectStatement = `SELECT html FROM ketquamiennam WHERE ngay = "${sqlDateString}"`;
   db.query(selectStatement, async (err, result) => {
@@ -295,6 +315,16 @@ const updateKetQuaMienTrung = (req, res) => {
       ? "0" + (currentDay.getMonth() + 1)
       : currentDay.getMonth() + 1
   }-${currentDay.getFullYear()}`;
+
+  const sqlDateString = `${currentDay.getFullYear()}-${
+    currentDay.getMonth() + 1 < 10
+      ? "0" + (currentDay.getMonth() + 1)
+      : currentDay.getMonth() + 1
+  }-${
+    currentDay.getDate() < 10
+      ? "0" + currentDay.getDate()
+      : currentDay.getDate()
+  }`;
 
   // check in database
   var selectStatement = `SELECT html FROM ketquamientrung WHERE ngay = "${sqlDateString}"`;
