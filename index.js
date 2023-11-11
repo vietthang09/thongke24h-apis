@@ -25,7 +25,8 @@ app.use(express.json());
 
 app.use("/api", thongke24h);
 
-cron.schedule("1 * * * * *", () => {
+cron.schedule("* * * * * *", () => {
+  updateKetQuaMienBac();
   const startMienBac = moment()
     .tz("Asia/Ho_Chi_Minh")
     .set({ hour: 18, minute: 31, second: 0 })
