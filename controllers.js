@@ -214,6 +214,10 @@ const updateKetQuaMienBac = (req, res) => {
       : currentDay.getDate()
   }`;
 
+  console.log(
+    `https://www.hdmediagroup.vn/ket-qua-xo-so-mien-bac-ngay-${urlDateString}.html`
+  );
+
   // Check in database
   var selectStatement = `SELECT html FROM ketquamienbac WHERE ngay = "${sqlDateString}"`;
   db.query(selectStatement, async (err, result) => {
