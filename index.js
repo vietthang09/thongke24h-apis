@@ -25,15 +25,14 @@ app.use(express.json());
 
 app.use("/api", thongke24h);
 
-cron.schedule("* * * * * *", () => {
-  updateKetQuaMienBac();
+cron.schedule("1 * * * * *", () => {
   const startMienBac = moment()
     .tz("Asia/Ho_Chi_Minh")
-    .set({ hour: 18, minute: 31, second: 0 })
+    .set({ hour: 19, minute: 0, second: 0 })
     .toDate();
   const endMienBac = moment()
     .tz("Asia/Ho_Chi_Minh")
-    .set({ hour: 18, minute: 35, second: 0 })
+    .set({ hour: 19, minute: 2, second: 0 })
     .toDate();
 
   const startMienNam = moment()
